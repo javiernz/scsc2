@@ -91,10 +91,13 @@
         if (respuestaUsuario === preguntaActual.respuestaCorrecta)
         {
            //alert('¡Respuesta correcta!');
+            document.getElementById(preguntaActual.respuestaCorrecta).classList.add('text-success', 'fw-bold');
            
         } 
         else
         {
+         document.getElementById(preguntaActual.respuestaCorrecta).classList.add('fw-bold');
+         document.getElementById(respuestaUsuario).classList.add('text-danger', 'fw-bold');
             //alert('Respuesta incorrecta. La respuesta correcta es la opción ' + (preguntaActual.respuestaCorrecta + 1));
         }
          document.getElementById('responder').classList.add('d-none');
