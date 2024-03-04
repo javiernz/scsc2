@@ -23,14 +23,14 @@
     // Array de preguntas y respuestas
     var preguntas = [
         {
-            pregunta: "¿Cuál es la capital de Francia?",
-            respuestas: ["Londres", "Berlín", "París", "Roma"],
+            pregunta: "En relación al derecho a la protección frente a los riesgos laborales recogido en la Ley 31/1995, de 8 de noviembre:",
+        respuestas: ["El empresario desarrollará una acción temporal de seguimiento de la actividad preventiva para los riesgos que no se hayan podido evitar.", "El coste de las medidas relativas a la seguridad y salud en el trabajo no deberá recaer en modo alguno sobre el empresario.", "Es un deber de las Administraciones públicas una protección eficaz en materia de seguridad y salud en el trabajo de los trabajadores frente a los riesgos laborales, respecto del personal a su servicio.", "El concierto con entidades especializadas para el desarrollo de actividades de prevención eximen al empresario del cumplimiento del deber de protección de los trabajadores."],
             respuestaCorrecta: 2 // Índice de la respuesta correcta (empezando desde 1)
         },
         {
-            pregunta: "¿Cuál es el río más largo del mundo?",
-            respuestas: ["Nilo", "Amazonas", "Yangtsé", "Misisipi"],
-            respuestaCorrecta: 0
+            pregunta: "La Ley de Prevención de Riesgos Laborales, en su artículo 15, establece los principios de la acción preventiva. Señale cuál de las siguientes respuestas no es correcta:",
+            respuestas: ["Tener en cuenta la evolución de la técnica.", "Combatir los riesgos en su origen.", "Evaluar los riesgos que no se puedan evitar.", "Adoptar medidas que antepongan la protección individual a la colectiva."],
+            respuestaCorrecta: 3
         },
         {
             pregunta: "¿Cuál es el elemento químico más abundante en la corteza terrestre?",
@@ -60,7 +60,7 @@
             radioInput.type = 'radio';
             radioInput.name = 'respuesta';
             radioInput.value = index; // Asignar el índice de la respuesta como valor
-			radioInput.setAttribute('class',' form-check-label mb-3');
+			radioLabel.setAttribute('class',' form-check-label mb-3');
             
             radioLabel.appendChild(radioInput);
             radioLabel.id = index;
