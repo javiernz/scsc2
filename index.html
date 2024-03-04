@@ -60,8 +60,8 @@
             radioInput.type = 'radio';
             radioInput.name = 'respuesta';
             radioInput.value = index; // Asignar el índice de la respuesta como valor
-			radioLabel.setAttribute('class',' form-check-label mb-3');
-            
+	    
+	    radioLabel.setAttribute('class',' form-check-label m-3');
             radioLabel.appendChild(radioInput);
             radioLabel.id = index;
             radioLabel.appendChild(document.createTextNode(abcd.charAt(index) + ') ' + respuesta));
