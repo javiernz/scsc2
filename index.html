@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<p id="pregunta"></p>
+<div id="respuestas">
+</div>
+<p id="console"></p>
+
+<form>
+  <input type="radio" id="html" name="fav_language" value="HTML">
+  <label for="html">HTML</label><br>
+  <input type="radio" id="css" name="fav_language" value="CSS">
+  <label for="css">CSS</label><br>
+  <input type="radio" id="javascript" name="fav_language" value="JavaScript">
+  <label for="javascript">JavaScript</label>
+</form> 
+</body>
+
+<script>
+
+// Array de preguntas y respuestas
+var preguntas = [
+    {
+        pregunta: "¿Cuál es la capital de Francia?",
+        respuestas: ["Londres", "Berlín", "París", "Roma"],
+        respuestaCorrecta: 2 
+    },
+    {
+        pregunta: "¿Cuál es el río más largo del mundo?",
+        respuestas: ["Nilo", "Amazonas", "Yangtsé", "Misisipi"],
+        respuestaCorrecta: 2
+    },
+    {
+        pregunta: "¿Cuál es el elemento químico más abundante en la corteza terrestre?",
+        respuestas: ["Oxígeno", "Carbono", "Hierro", "Silicio"],
+        respuestaCorrecta: 1
+    }
+];
+
+// Función para obtener un número aleatorio entre 0 y 3 (para seleccionar las respuestas)
+function getRandomIndex(valor) {
+    return Math.floor(Math.random() * valor);
+}
+
+// Función para mostrar una pregunta con sus respuestas aleatorias
+function mostrarPregunta() {
+    // Seleccionar una pregunta aleatoria
+    var preguntaIndex = Math.floor(Math.random() * preguntas.length);
+    var preguntaActual = preguntas[preguntaIndex];
+
+    // Mostrar la pregunta
+    document.getElementById('pregunta').innerHTML = preguntaActual.pregunta;
+
+    // Obtener un orden aleatorio para mostrar las respuestas
+    var respuestasOrdenadas = [];
+    var respuestasRestantes = preguntaActual.respuestas.slice(); // Copiar el array de respuestas
+    
+    const respuestas = document.getElementById('respuestas');
+    
+    const formulario = document.createElement('form');
+    
+    for (var i = 0; i < 4; i++)
+    {
+        var index = getRandomIndex(respuestasRestantes.length);
+        respuestasOrdenadas.push(respuestasRestantes[index]);
+        respuestasRestantes.splice(index, 1); // Eliminar la respuesta ya seleccionada
+    }
+
+    // Mostrar las respuestas en la consola
+    
+    respuestasOrdenadas.forEach(function(respuesta, index)
+    {
+        
+        const abcd = 'ABCD';        
+                
+        let radio = document.createElement('input');
+    	radio.setAttribute('type', 'radio');
+        radio.setAttribute('id', index);
+    	radio.setAttribute('name', abcd.charAt(index));
+        radio.setAttribute('value', index);
+    	formulario.appendChild(radio);
+        
+        let label = document.createElement('label');
+    	label.setAttribute('for', abcd.charAt(index));
+    	label.textContent = abcd.charAt(index) + ' - ' + respuesta;
+    	formulario.appendChild(label);
+        
+	    let linebreak = document.createElement('br');
+    	formulario.appendChild(linebreak);
+        
+    });
+
+	respuestas.appendChild(formulario);    
+    
+
+    // Devolver el índice de la respuesta correcta
+    return preguntaActual.respuestaCorrecta;
+}
+
+// Función para verificar si la respuesta es correcta
+function verificarRespuesta(respuestaUsuario, respuestaCorrecta) {
+    if (respuestaUsuario === respuestaCorrecta) {
+        console.log("¡Respuesta correcta!");
+    } else {
+        console.log("Respuesta incorrecta. La respuesta correcta es la opción " + respuestaCorrecta);
+    }
+}
+
+// Llamar a la función para mostrar la pregunta y respuestas
+var respuestaCorrecta = mostrarPregunta();
+
+// Simular que el usuario elige una respuesta (puedes cambiar el número para probar diferentes respuestas)
+var respuestaUsuario = 2;
+
+// Verificar la respuesta del usuario
+verificarRespuesta(respuestaUsuario, respuestaCorrecta);
+
+</script>
+
+</html>
