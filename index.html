@@ -60,9 +60,10 @@
             radioInput.type = 'radio';
             radioInput.name = 'respuesta';
             radioInput.value = index; // Asignar el índice de la respuesta como valor
-
 			radioInput.setAttribute('class',' form-check-label mb-3');
+            
             radioLabel.appendChild(radioInput);
+            radioLabel.id = index;
             radioLabel.appendChild(document.createTextNode(abcd.charAt(index) + ') ' + respuesta));
 
             preguntaContainer.appendChild(radioLabel);
@@ -89,14 +90,16 @@
     
         if (respuestaUsuario === preguntaActual.respuestaCorrecta)
         {
-           alert('¡Respuesta correcta!');
+           //alert('¡Respuesta correcta!');
+           
         } 
         else
         {
-            alert('Respuesta incorrecta. La respuesta correcta es la opción ' + (preguntaActual.respuestaCorrecta + 1));
+            //alert('Respuesta incorrecta. La respuesta correcta es la opción ' + (preguntaActual.respuestaCorrecta + 1));
         }
          document.getElementById('responder').classList.add('d-none');
          document.getElementById('nueva').classList.remove('d-none');
+                    document.getElementById(preguntaActual.respuestaCorrecta).classList.add('fw-bold');
     }
 
     // Obtener una pregunta aleatoria
