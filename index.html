@@ -13,10 +13,10 @@
 
 <form id="formulario" class="form-check">
     <div id="pregunta-container"></div>
-    <button type="submit" class="btn btn-primary">Responder</button>
+    <button id="responder" type="submit" class="btn btn-primary">Responder</button>
 
 </form>
-    <button id="nueva" onclick="window.location.reload()" class="btn btn-primary">Nueva</button>
+    <button id="nueva" onclick="window.location.reload()" class="btn btn-primary d-none mx-4">Nueva</button>
 
 <script>
 
@@ -78,18 +78,25 @@
         if (respuestaSeleccionada) {
             var respuestaUsuario = parseInt(respuestaSeleccionada.value); // Convertir el valor de la respuesta a entero
             verificarRespuesta(respuestaUsuario);
-        } else {
+            } else {
             alert('Por favor selecciona una respuesta.');
         }
     }
 
     // Función para verificar la respuesta seleccionada por el usuario
-    function verificarRespuesta(respuestaUsuario) {
-        if (respuestaUsuario === preguntaActual.respuestaCorrecta) {
-            alert('¡Respuesta correcta!');
-        } else {
+    function verificarRespuesta(respuestaUsuario)
+    {
+    
+        if (respuestaUsuario === preguntaActual.respuestaCorrecta)
+        {
+           alert('¡Respuesta correcta!');
+        } 
+        else
+        {
             alert('Respuesta incorrecta. La respuesta correcta es la opción ' + (preguntaActual.respuestaCorrecta + 1));
         }
+         document.getElementById('responder').classList.add('d-none');
+         document.getElementById('nueva').classList.remove('d-none');
     }
 
     // Obtener una pregunta aleatoria
@@ -102,7 +109,10 @@
     var formulario = document.getElementById('formulario');
     formulario.addEventListener('submit', handleSubmit);
     
-    document.getElementByID('nueva').onclick = function() { location.reload();};
+    document.getElementByID('nueva').onclick = function()
+    { 
+    	location.reload();
+    };
 
 
 </script>
