@@ -1,122 +1,104 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Pregunta</title>
+</head>
 <body>
 
-<p id="pregunta"></p>
-<div id="respuestas">
-</div>
-<p id="console"></p>
+<h2>Pregunta</h2>
 
-<form>
-  <input type="radio" id="html" name="fav_language" value="HTML">
-  <label for="html">HTML</label><br>
-  <input type="radio" id="css" name="fav_language" value="CSS">
-  <label for="css">CSS</label><br>
-  <input type="radio" id="javascript" name="fav_language" value="JavaScript">
-  <label for="javascript">JavaScript</label>
-</form> 
-</body>
+<form id="formulario">
+    <div id="pregunta-container"></div>
+    <button type="submit">Enviar</button>
+
+</form>
+    <button id="nueva" onclick="window.location.reload()">Nueva</button>
 
 <script>
 
-// Array de preguntas y respuestas
-var preguntas = [
-    {
-        pregunta: "¿Cuál es la capital de Francia?",
-        respuestas: ["Londres", "Berlín", "París", "Roma"],
-        respuestaCorrecta: 2 
-    },
-    {
-        pregunta: "¿Cuál es el río más largo del mundo?",
-        respuestas: ["Nilo", "Amazonas", "Yangtsé", "Misisipi"],
-        respuestaCorrecta: 2
-    },
-    {
-        pregunta: "¿Cuál es el elemento químico más abundante en la corteza terrestre?",
-        respuestas: ["Oxígeno", "Carbono", "Hierro", "Silicio"],
-        respuestaCorrecta: 1
-    }
-];
+    // Array de preguntas y respuestas
+    var preguntas = [
+        {
+            pregunta: "¿Cuál es la capital de Francia?",
+            respuestas: ["Londres", "Berlín", "París", "Roma"],
+            respuestaCorrecta: 2 // Índice de la respuesta correcta (empezando desde 1)
+        },
+        {
+            pregunta: "¿Cuál es el río más largo del mundo?",
+            respuestas: ["Nilo", "Amazonas", "Yangtsé", "Misisipi"],
+            respuestaCorrecta: 0
+        },
+        {
+            pregunta: "¿Cuál es el elemento químico más abundante en la corteza terrestre?",
+            respuestas: ["Oxígeno", "Carbono", "Hierro", "Silicio"],
+            respuestaCorrecta: 0
+        }
+    ];
 
-// Función para obtener un número aleatorio entre 0 y 3 (para seleccionar las respuestas)
-function getRandomIndex(valor) {
-    return Math.floor(Math.random() * valor);
-}
+    // Función para crear el formulario de la pregunta actual
+    function crearFormulario(pregunta) {
+        var preguntaContainer = document.getElementById('pregunta-container');
+        preguntaContainer.innerHTML = ''; // Limpiar el contenido del contenedor
 
-// Función para mostrar una pregunta con sus respuestas aleatorias
-function mostrarPregunta() {
-    // Seleccionar una pregunta aleatoria
-    var preguntaIndex = Math.floor(Math.random() * preguntas.length);
-    var preguntaActual = preguntas[preguntaIndex];
+        // Crear elemento de pregunta
+        var preguntaElement = document.createElement('p');
+        preguntaElement.textContent = pregunta.pregunta;
+        preguntaContainer.appendChild(preguntaElement);
 
-    // Mostrar la pregunta
-    document.getElementById('pregunta').innerHTML = preguntaActual.pregunta;
+        // Crear elementos de opciones de respuesta
+        pregunta.respuestas.forEach(function(respuesta, index) {
+            var radioLabel = document.createElement('label');
+            var radioInput = document.createElement('input');
+            radioInput.type = 'radio';
+            radioInput.name = 'respuesta';
+            radioInput.value = index; // Asignar el índice de la respuesta como valor
 
-    // Obtener un orden aleatorio para mostrar las respuestas
-    var respuestasOrdenadas = [];
-    var respuestasRestantes = preguntaActual.respuestas.slice(); // Copiar el array de respuestas
-    
-    const respuestas = document.getElementById('respuestas');
-    
-    const formulario = document.createElement('form');
-    
-    for (var i = 0; i < 4; i++)
-    {
-        var index = getRandomIndex(respuestasRestantes.length);
-        respuestasOrdenadas.push(respuestasRestantes[index]);
-        respuestasRestantes.splice(index, 1); // Eliminar la respuesta ya seleccionada
+            radioLabel.appendChild(radioInput);
+            radioLabel.appendChild(document.createTextNode(respuesta));
+
+            preguntaContainer.appendChild(radioLabel);
+            preguntaContainer.appendChild(document.createElement('br'));
+        });
     }
 
-    // Mostrar las respuestas en la consola
-    
-    respuestasOrdenadas.forEach(function(respuesta, index)
-    {
-        
-        const abcd = 'ABCD';        
-                
-        let radio = document.createElement('input');
-    	radio.setAttribute('type', 'radio');
-        radio.setAttribute('id', index);
-    	radio.setAttribute('name', abcd.charAt(index));
-        radio.setAttribute('value', index);
-    	formulario.appendChild(radio);
-        
-        let label = document.createElement('label');
-    	label.setAttribute('for', abcd.charAt(index));
-    	label.textContent = abcd.charAt(index) + ' - ' + respuesta;
-    	formulario.appendChild(label);
-        
-	    let linebreak = document.createElement('br');
-    	formulario.appendChild(linebreak);
-        
-    });
+    // Función para manejar el envío del formulario
+    function handleSubmit(event) {
+        event.preventDefault(); // Prevenir el envío por defecto del formulario
 
-	respuestas.appendChild(formulario);    
-    
-
-    // Devolver el índice de la respuesta correcta
-    return preguntaActual.respuestaCorrecta;
-}
-
-// Función para verificar si la respuesta es correcta
-function verificarRespuesta(respuestaUsuario, respuestaCorrecta) {
-    if (respuestaUsuario === respuestaCorrecta) {
-        console.log("¡Respuesta correcta!");
-    } else {
-        console.log("Respuesta incorrecta. La respuesta correcta es la opción " + respuestaCorrecta);
+        var respuestaSeleccionada = document.querySelector('input[name="respuesta"]:checked');
+        if (respuestaSeleccionada) {
+            var respuestaUsuario = parseInt(respuestaSeleccionada.value); // Convertir el valor de la respuesta a entero
+            verificarRespuesta(respuestaUsuario);
+        } else {
+            alert('Por favor selecciona una respuesta.');
+        }
     }
-}
 
-// Llamar a la función para mostrar la pregunta y respuestas
-var respuestaCorrecta = mostrarPregunta();
+    // Función para verificar la respuesta seleccionada por el usuario
+    function verificarRespuesta(respuestaUsuario) {
+        if (respuestaUsuario === preguntaActual.respuestaCorrecta) {
+            alert('¡Respuesta correcta!');
+        } else {
+            alert('Respuesta incorrecta. La respuesta correcta es la opción ' + (preguntaActual.respuestaCorrecta + 1));
+        }
+    }
 
-// Simular que el usuario elige una respuesta (puedes cambiar el número para probar diferentes respuestas)
-var respuestaUsuario = 2;
+    // Obtener una pregunta aleatoria
+    var preguntaActual = preguntas[Math.floor(Math.random() * preguntas.length)];
 
-// Verificar la respuesta del usuario
-verificarRespuesta(respuestaUsuario, respuestaCorrecta);
+    // Crear el formulario con la pregunta actual
+    crearFormulario(preguntaActual);
+
+    // Agregar un evento de escucha para el envío del formulario
+    var formulario = document.getElementById('formulario');
+    formulario.addEventListener('submit', handleSubmit);
+    
+    document.getElementByID('nueva').onclick = function() { location.reload();};
+
 
 </script>
 
+</body>
 </html>
